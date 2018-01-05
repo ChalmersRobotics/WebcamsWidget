@@ -59,13 +59,14 @@ class Webcams_Widget extends WP_Widget {
 		/*
 		*/
 		$this->insertZoomScript();
-		echo esc_html__( 'Hello, World!', 'text_domain' );
 		echo $args['after_widget'];
 	}
 	public function drawWebcamImg($title, $webcamurl, $webcammovementurl) {
 		?>
 		<div class="webcamFrame">
-		<img class="webcam" style="cursor: pointer; width: 100%;" onclick="zoom(this)" alt="A picture of the webcam <?php echo esc_url($title); ?> " src="<?php echo esc_url($webcamurl); ?>" />
+			<img class="webcam" style="cursor: pointer; width: 100%;" onclick="zoom(this)" alt="A picture of the webcam <?php echo $title; ?> " src="<?php echo $webcamurl; ?>" />
+			<img class="webcamm" style="display: none;" alt="A picture of latest movement of webcam <?php echo $title; ?> " src="<?php echo $webcammovementurl; ?>" />
+			<p class="movementfullscreenlink" style="cursor: pointer; color: blue; text-decoration: underline;" >Latest movement <?php echo $title; ?></p>
 		</div>
 		<?php
 	}
@@ -84,6 +85,14 @@ class Webcams_Widget extends WP_Widget {
 			function zoomOut() {
 				jQuery("#largepicplaceholder").fadeOut("slow");
 			}
+			//zoom($(this).parent().find('webcamm'))
+			jQuery(function ($) {
+				$('.movementfullscreenlink').click( function() {
+					var obj = $(this).parent().children('.webcamm');
+					//alert(obj.attr("src"));
+					zoom(obj);
+				} );
+			});
 			// ]]>
 		</script>
 		<?php
