@@ -12,16 +12,11 @@ Description:       A widget for Wordpress where you can display images from webc
 Version:           1.0.0
 Author:            Tim Gremalm
 Author URI:        http://tim.gremalm.se/
-License:           GPL-2.0+
-License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+License:           GPL-3.0+
+License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
 Text Domain:       webcamswidget
 Domain Path:       /languages
 */
-
-//If this file is called directly, abort
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
 
 //Widget
 class Webcams_Widget extends WP_Widget {
@@ -29,7 +24,7 @@ class Webcams_Widget extends WP_Widget {
 		parent::__construct(
 			'webcams_widget', // Base ID
 			esc_html__( 'Webcams Widget', 'text_domain' ), // Name
-			array( 'description' => esc_html__( 'Adds webcams in a widget', 'text_domain' ), ) // Args
+			array( 'description' => esc_html__( 'Adds webcams in a widget', 'text_domain' ), )
 		);
 	}
 
@@ -65,7 +60,7 @@ class Webcams_Widget extends WP_Widget {
 		?>
 		<div class="webcamFrame">
 			<img class="webcam" style="cursor: pointer; width: 100%;" onclick="zoom(this)" alt="A picture of the webcam <?php echo $title; ?> " src="<?php echo $webcamurl; ?>" />
-			<img class="webcamm" style="display: none;" alt="A picture of latest movement of webcam <?php echo $title; ?> " src="<?php echo $webcammovementurl; ?>" />
+			<img class="webcammovement" style="display: none;" alt="A picture of latest movement of webcam <?php echo $title; ?> " src="<?php echo $webcammovementurl; ?>" />
 			<p class="movementfullscreenlink" style="cursor: pointer; color: blue; text-decoration: underline;" >Latest movement <?php echo $title; ?></p>
 		</div>
 		<?php
@@ -85,11 +80,9 @@ class Webcams_Widget extends WP_Widget {
 			function zoomOut() {
 				jQuery("#largepicplaceholder").fadeOut("slow");
 			}
-			//zoom($(this).parent().find('webcamm'))
 			jQuery(function ($) {
 				$('.movementfullscreenlink').click( function() {
-					var obj = $(this).parent().children('.webcamm');
-					//alert(obj.attr("src"));
+					var obj = $(this).parent().children('.webcammovement');
 					zoom(obj);
 				} );
 			});
