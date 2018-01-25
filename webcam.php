@@ -67,7 +67,7 @@ class Webcams_Widget extends WP_Widget {
 	}
 	public function drawZoomPlaceholder() {
 		?>
-		<div id="largepicplaceholder" style="position: fixed; display: none; width: 90%; margin: 0 auto; left: 5%; top: 5%;"></div>
+		<div id="largepicplaceholder" style="position: fixed; display: none; width: 90%; margin: 0 auto; left: 5%; top: 5%; z-index:10000"></div>
 		<?php
 	}
 	public function insertZoomScript() {
