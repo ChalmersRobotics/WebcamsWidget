@@ -59,8 +59,8 @@ class Webcams_Widget extends WP_Widget {
 	public function drawWebcamImg($title, $webcamurl, $webcammovementurl) {
 		?>
 		<div class="webcamFrame">
-			<img class="webcam" style="cursor: pointer; width: 100%;" onclick="zoom(this)" alt="A picture of the webcam <?php echo $title; ?> " src="<?php echo $webcamurl; ?>" />
-			<img class="webcammovement" style="display: none;" alt="A picture of latest movement of webcam <?php echo $title; ?> " src="<?php echo $webcammovementurl; ?>" />
+			<img class="webcam" style="cursor: pointer; width: 100%;" onclick="zoom(this)" alt="A picture of the webcam <?php echo $title; ?> " src="<?php echo $webcamurl; ?>" title="<?php echo $webcamurl; ?>" />
+			<img class="webcammovement" style="display: none;" alt="A picture of latest movement of webcam <?php echo $title; ?> " src="<?php echo $webcammovementurl; ?>" title="<?php echo $webcammovementurl; ?>" />
 			<p class="movementfullscreenlink" style="cursor: pointer; color: blue; text-decoration: underline;" >Latest movement <?php echo $title; ?></p>
 		</div>
 		<?php
@@ -74,7 +74,7 @@ class Webcams_Widget extends WP_Widget {
 		?>
 		<script type="text/javascript" language="javascript">// <![CDATA[
 			function zoom(obj) {
-				jQuery("#largepicplaceholder").html('<img id="largepic" class="webcam" style="cursor:pointer; width: 100%;" onclick="zoomOut()" src="'+jQuery(obj).attr("src")+'" alt="Click to zoom out" />');
+				jQuery("#largepicplaceholder").html('<img id="largepic" style="cursor:pointer; width: 100%;" onclick="zoomOut()" src="'+jQuery(obj).attr("title")+'" alt="Click to zoom out" title="'+jQuery(obj).attr("src")+'" />');
 				jQuery("#largepicplaceholder").fadeIn("slow");
 			}
 			function zoomOut() {
@@ -86,6 +86,16 @@ class Webcams_Widget extends WP_Widget {
 					zoom(obj);
 				} );
 			});
+			function reloadImgs() {
+				var webcampics = jQuery(".webcam, #largepic");
+				webcampics.each(function(key, pic) {
+					var url = pic.title;
+					url += '?_ts=' + new Date().getTime();
+					pic .src = url;
+					console.log("Updating webcam at url: "+url);
+				});
+			}
+			setInterval(reloadImgs,30000);
 			// ]]>
 		</script>
 		<?php
