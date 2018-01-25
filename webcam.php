@@ -167,7 +167,11 @@ function save_meta_box_webcam( $post_id, $post ) {
 	//This sanitizes the data from the field and saves it into an array $webcam_meta
 	$webcam_meta['webcamurl'] = esc_textarea( $_POST['webcamurl'] );
 	$webcam_meta['webcammovementurl'] = esc_textarea( $_POST['webcammovementurl'] );
-	$webcam_meta['webcamsortorder'] = esc_textarea( $_POST['webcamsortorder'] );
+	if ( ! isset( $_POST['webcamsortorder'] ) || strlen($_POST['webcamsortorder']) == 0 ) {
+		$webcam_meta['webcamsortorder'] = '1000';
+	} else {
+		$webcam_meta['webcamsortorder'] = esc_textarea( $_POST['webcamsortorder'] );
+	}
 
 	foreach ( $webcam_meta as $key => $value ) :
 		//Don't store custom data twice
